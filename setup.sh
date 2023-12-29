@@ -25,14 +25,14 @@ chmod +x "$SCRIPT_PATH/$SCRIPT_NAME"
 #install helper binary
 touch $BIN_PATH
 chmod +x $BIN_PATH
-cat > $BIN_PATH <<- STRING
+cat > $BIN_PATH <<- EOM
 #!/bin/bash
 if [[ ! -f \$1 || ! -x \$1 ]]; then
 	echo "Please provide an executable script file"
 	exit 1
 fi
 cp \$1 $SERVICE_PATH && echo "Deferred: \$1"
-STRING
+EOM
 
 # copy service definition to file
 cat > $SERVICE_FILE <<- EOM
