@@ -11,7 +11,10 @@ run `sudo setup.sh` which will:
 
 ## Usage
 Defer a script to run after next startup with the `reboot-defer` command
-`reboot-defer foo.sh`
+
+>`reboot-defer foo.sh`
+
 
 You can also add a deferred script by placing it in `/etc/local/runonce.d/`
-`cp test.sh /etc/local/runonce.d
+
+>`cp test.sh /etc/local/runonce.d`
