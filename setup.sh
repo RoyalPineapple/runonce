@@ -18,18 +18,15 @@ if [[ $(id -u) != 0 ]]; then
 	exit 1
 fi
 
-# Create service directory to contain scripts.
 echo "Creating service directory at $SERVICE_PATH"
 mkdir -p "$SERVICE_PATH"
 chown $USER "$SERVICE_PATH"
 
-#Install the runonce script
 echo "Installing $SCRIPT_NAME at $SCRIPT_PATH"
 mkdir -p "$SCRIPT_PATH"
 cp "$(dirname "$0")/$SCRIPT_NAME" "$SCRIPT_PATH"/
 chmod +x "$SCRIPT_PATH/$SCRIPT_NAME"
 
-#install helper binary
 echo "Installing $BIN_NAME command"
 touch $BIN_PATH
 chmod +x $BIN_PATH
@@ -42,8 +39,7 @@ fi
 cp \$1 $SERVICE_PATH && echo "Deferred: \$1"
 EOM
 
-echo "Creating service definition"
-# copy service definition to file
+echo "Creating service definition at $SERVICE_FILE"
 cat > $SERVICE_FILE <<- EOM
 [Unit]
 Description="Run Once Service"
@@ -57,7 +53,9 @@ ExecStart=/bin/bash -c '$SCRIPT_PATH/$SCRIPT_NAME $SERVICE_PATH'
 WantedBy=multi-user.target
 EOM
 
-# Enable Service
+echo "Reoloading systemd"
+systemctl daemon-reload
+
 echo "Enabling service"
 systemctl enable runonce
 systemctl status runonce
