@@ -1,6 +1,8 @@
 #!/bin/sh
 
-set -euo pipefail
+set -eux
+
+USER=pi
 
 SERVICE_FILE=/etc/systemd/system/runonce.service
 SERVICE_PATH="/etc/local/runonce.d"
@@ -12,7 +14,8 @@ SCRIPT_NAME="runonce.sh"
 
 # copy runonce script to bin
 mkdir -p "$SERVICE_PATH"
-cp "$(dirname "$0")/$SCRIPT_NAME" "$BIN_PATH"
+mkdir -p "$BIN_PATH"
+cp "$(dirname "$0")/$SCRIPT_NAME" "$BIN_PATH"/
 chmod +x "$BIN_PATH/$SCRIPT_NAME"
 
 # copy service definition to file
@@ -24,7 +27,7 @@ After=network.target
 [Service]
 Type=simple
 Restart=no
-User=pi
+User="$USER"
 ExecStart="$BIN_PATH/$SCRIPT_NAME $SERVICE_PATH"
 [Install]
 WantedBy=multi-user.target
