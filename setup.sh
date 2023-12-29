@@ -42,12 +42,12 @@ systemctl enable runonce
 systemctl status runonce
 
 #install helper binary
-cat > $BIN_PATH <<- EOM
+cat > $BIN_PATH <<- STRING
 #!/bin/bash
 if [[ ! -f \$1 || ! -x \$1 ]]; then
 	echo "Please provide an executable script file"
 	exit 1
 fi
 cp \$1 $SERVICE_PATH && echo "Deferred: \$1"
-EOM
+STRING
 chmod +x $BIN_PATH
