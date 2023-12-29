@@ -11,7 +11,7 @@ SCRIPT_PATH="/etc/local/bin"
 SCRIPT_NAME="runonce.sh"
 
 BIN_NAME=reboot-defer
-BIN_PATH=/usr/local/bin/$BIN_NAME
+BIN_PATH=/usr/local/bin/
 
 if [[ $(id -u) != 0 ]]; then 
 	echo "Pleae run setup.sh as root."
@@ -27,8 +27,8 @@ mkdir -p "$SCRIPT_PATH"
 cp "$(dirname "$0")/$SCRIPT_NAME" "$SCRIPT_PATH"/
 chmod +x "$SCRIPT_PATH/$SCRIPT_NAME"
 
-echo "Installing $BIN_NAME command"
-cat > $BIN_PATH <<- EOM
+echo "Installing $BIN_NAME command at $BIN_PATH"
+cat > $BIN_PATH/$BIN_NAME <<- EOM
 #!/bin/bash
 if [[ ! -f \$1 || ! -x \$1 ]]; then
 	echo "Please provide an executable script file"
