@@ -42,6 +42,8 @@ systemctl enable runonce
 systemctl status runonce
 
 #install helper binary
+touch $BIN_PATH
+chmod +x $BIN_PATH
 cat > $BIN_PATH <<- STRING
 #!/bin/bash
 if [[ ! -f \$1 || ! -x \$1 ]]; then
@@ -50,4 +52,5 @@ if [[ ! -f \$1 || ! -x \$1 ]]; then
 fi
 cp \$1 $SERVICE_PATH && echo "Deferred: \$1"
 STRING
-chmod +x $BIN_PATH
+
+echo "completed"
