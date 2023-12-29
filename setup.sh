@@ -27,7 +27,7 @@ After=network.target
 [Service]
 Type=simple
 Restart=no
-User="$USER"
+User=$USER
 ExecStart="$BIN_PATH/$SCRIPT_NAME $SERVICE_PATH"
 [Install]
 WantedBy=multi-user.target
