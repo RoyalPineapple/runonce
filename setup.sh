@@ -28,8 +28,6 @@ cp "$(dirname "$0")/$SCRIPT_NAME" "$SCRIPT_PATH"/
 chmod +x "$SCRIPT_PATH/$SCRIPT_NAME"
 
 echo "Installing $BIN_NAME command"
-touch $BIN_PATH
-chmod +x $BIN_PATH
 cat > $BIN_PATH <<- EOM
 #!/bin/bash
 if [[ ! -f \$1 || ! -x \$1 ]]; then
@@ -38,6 +36,8 @@ if [[ ! -f \$1 || ! -x \$1 ]]; then
 fi
 cp \$1 $SERVICE_PATH && echo "Deferred: \$1"
 EOM
+chmod +x $BIN_PATH
+
 
 echo "Creating service definition at $SERVICE_FILE"
 cat > $SERVICE_FILE <<- EOM
