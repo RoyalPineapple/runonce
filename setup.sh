@@ -28,7 +28,7 @@ After=network.target
 Type=simple
 Restart=no
 User=$USER
-ExecStart="$BIN_PATH/$SCRIPT_NAME $SERVICE_PATH"
+ExecStart=/bin/bash -c '$BIN_PATH/$SCRIPT_NAME $SERVICE_PATH'
 [Install]
 WantedBy=multi-user.target
 EOM
@@ -37,4 +37,4 @@ EOM
 sudo systemctl enable runonce
 
 # View Status
-systemctl status runonce
+sudo systemctl status runonce
