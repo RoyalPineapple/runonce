@@ -12,6 +12,10 @@ SCRIPT_NAME="runonce.sh"
 
 BIN_PATH=/usr/local/bin/reboot-defer
 
+if [[ $(id -u) != 0 ]]; then 
+	echo "Pleae run setup.sh as root"
+	exit 1
+fi
 
 # Create service directory to contain scripts.
 mkdir -p "$SERVICE_PATH"
