@@ -1,11 +1,9 @@
 #!/bin/bash
 
-set -eu
-
 directory="$1"
 
 if [[ -z $directory ]]; then 
-	echo "no directory specified"
+	echo "Please provide a directory of scripts to run."
 	exit 1
 fi
 
