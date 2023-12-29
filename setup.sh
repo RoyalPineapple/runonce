@@ -22,6 +22,18 @@ mkdir -p "$SCRIPT_PATH"
 cp "$(dirname "$0")/$SCRIPT_NAME" "$SCRIPT_PATH"/
 chmod +x "$SCRIPT_PATH/$SCRIPT_NAME"
 
+#install helper binary
+touch $BIN_PATH
+chmod +x $BIN_PATH
+cat > $BIN_PATH <<- STRING
+#!/bin/bash
+if [[ ! -f \$1 || ! -x \$1 ]]; then
+	echo "Please provide an executable script file"
+	exit 1
+fi
+cp \$1 $SERVICE_PATH && echo "Deferred: \$1"
+STRING
+
 # copy service definition to file
 cat > $SERVICE_FILE <<- EOM
 [Unit]
@@ -37,20 +49,7 @@ ExecStart=/bin/bash -c '$SCRIPT_PATH/$SCRIPT_NAME $SERVICE_PATH'
 WantedBy=multi-user.target
 EOM
 
+
 # Enable Service
 systemctl enable runonce
 systemctl status runonce
-
-#install helper binary
-touch $BIN_PATH
-chmod +x $BIN_PATH
-cat > $BIN_PATH <<- STRING
-#!/bin/bash
-if [[ ! -f \$1 || ! -x \$1 ]]; then
-	echo "Please provide an executable script file"
-	exit 1
-fi
-cp \$1 $SERVICE_PATH && echo "Deferred: \$1"
-STRING
-
-echo "completed"
