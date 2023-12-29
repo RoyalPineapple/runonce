@@ -9,7 +9,6 @@ if [[ -z $directory ]]; then
 	exit 1
 fi
 
-timestamp=$(date +%Y%m%dT%H%M%S)
 
 for file in ${directory}/*
 do
@@ -26,6 +25,7 @@ do
 	fi
 
 	dest_path="$directory/completed/"
+	timestamp=$(date +%Y%m%dT%H%M%S)
 	dest_name="$(basename "$file").$timestamp"
 
 	mkdir -p "$dest_path"
