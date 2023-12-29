@@ -13,7 +13,7 @@ SCRIPT_NAME="runonce.sh"
 
 # Create service directory to contain scripts.
 mkdir -p "$SERVICE_PATH"
-chown chown $USER "$SERVICE_PATH"
+chown $USER "$SERVICE_PATH"
 
 #Install the runonce script
 mkdir -p "$BIN_PATH"
