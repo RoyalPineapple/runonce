@@ -7,8 +7,10 @@ USER=pi
 SERVICE_FILE=/etc/systemd/system/runonce.service
 SERVICE_PATH="/etc/local/runonce.d"
 
-BIN_PATH="/etc/local/bin"
+SCRIPT_PATH="/etc/local/bin"
 SCRIPT_NAME="runonce.sh"
+
+BIN_PATH=/usr/local/bin/reboot-defer
 
 
 # Create service directory to contain scripts.
@@ -16,9 +18,9 @@ mkdir -p "$SERVICE_PATH"
 chown $USER "$SERVICE_PATH"
 
 #Install the runonce script
-mkdir -p "$BIN_PATH"
-cp "$(dirname "$0")/$SCRIPT_NAME" "$BIN_PATH"/
-chmod +x "$BIN_PATH/$SCRIPT_NAME"
+mkdir -p "$SCRIPT_PATH"
+cp "$(dirname "$0")/$SCRIPT_NAME" "$SCRIPT_PATH"/
+chmod +x "$SCRIPT_PATH/$SCRIPT_NAME"
 
 # copy service definition to file
 cat > $SERVICE_FILE <<- EOM
@@ -30,7 +32,7 @@ After=network.target
 Type=simple
 Restart=no
 User=$USER
-ExecStart=/bin/bash -c '$BIN_PATH/$SCRIPT_NAME $SERVICE_PATH'
+ExecStart=/bin/bash -c '$SCRIPT_PATH/$SCRIPT_NAME $SERVICE_PATH'
 [Install]
 WantedBy=multi-user.target
 EOM
@@ -38,3 +40,14 @@ EOM
 # Enable Service
 systemctl enable runonce
 systemctl status runonce
+
+#install helper binary
+cat > $BIN_PATH <<- EOM
+#!/bin/bash
+if [[ ! -f \$1 || ! -x \$1 ]]; then
+	echo "Please provide an executable script file"
+	exit 1
+fi
+cp \$1 $SERVICE_PATH && echo "Deferred: \$1"
+EOM
+chmod +x $BIN_PATH
