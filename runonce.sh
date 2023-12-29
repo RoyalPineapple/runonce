@@ -8,7 +8,7 @@ if [[ -z $directory ]]; then
 fi
 
 if [[ ! -d $directory ]];  then 
-	echo "Argument is not a directory $directory"
+	echo "Provuded argument is not a directory: $directory"
 	exit 1
 fi
 
