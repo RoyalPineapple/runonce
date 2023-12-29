@@ -25,10 +25,9 @@ do
 		logger -t runonce "Found a file that was not executable: $file"
 	fi
 
-	dest_path="$directory/ran/"
+	dest_path="$directory/completed/"
 	dest_name="$(basename "$file").$timestamp"
 
-	chmod -x "$file"
 	mkdir -p "$dest_path"
 	mv "$file" "$dest_path/$dest_name"
 	logger -t runonce -p local3.info "$file"

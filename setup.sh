@@ -11,15 +11,17 @@ BIN_PATH="/etc/local/bin"
 SCRIPT_NAME="runonce.sh"
 
 
+# Create service directory to contain scripts.
+mkdir -p "$SERVICE_PATH"
+chown chown $USER "$SERVICE_PATH"
 
-# copy runonce script to bin
-sudo mkdir -p "$SERVICE_PATH"
-sudo mkdir -p "$BIN_PATH"
-sudo cp "$(dirname "$0")/$SCRIPT_NAME" "$BIN_PATH"/
-sudo chmod +x "$BIN_PATH/$SCRIPT_NAME"
+#Install the runonce script
+mkdir -p "$BIN_PATH"
+cp "$(dirname "$0")/$SCRIPT_NAME" "$BIN_PATH"/
+chmod +x "$BIN_PATH/$SCRIPT_NAME"
 
 # copy service definition to file
-sudo cat > $SERVICE_FILE <<- EOM
+cat > $SERVICE_FILE <<- EOM
 [Unit]
 Description="Run Once Service"
 After=network.target
@@ -34,7 +36,5 @@ WantedBy=multi-user.target
 EOM
 
 # Enable Service
-sudo systemctl enable runonce
-
-# View Status
-sudo systemctl status runonce
+systemctl enable runonce
+systemctl status runonce
