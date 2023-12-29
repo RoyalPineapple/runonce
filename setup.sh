@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 set -eux
 
@@ -13,13 +13,13 @@ SCRIPT_NAME="runonce.sh"
 
 
 # copy runonce script to bin
-mkdir -p "$SERVICE_PATH"
-mkdir -p "$BIN_PATH"
-cp "$(dirname "$0")/$SCRIPT_NAME" "$BIN_PATH"/
-chmod +x "$BIN_PATH/$SCRIPT_NAME"
+sudo mkdir -p "$SERVICE_PATH"
+sudo mkdir -p "$BIN_PATH"
+sudo cp "$(dirname "$0")/$SCRIPT_NAME" "$BIN_PATH"/
+sudo chmod +x "$BIN_PATH/$SCRIPT_NAME"
 
 # copy service definition to file
-cat > $SERVICE_FILE <<- EOM
+sudo cat > $SERVICE_FILE <<- EOM
 [Unit]
 Description="Run Once Service"
 After=network.target
@@ -34,7 +34,7 @@ WantedBy=multi-user.target
 EOM
 
 # Enable Service
-systemctl enable runonce
+sudo systemctl enable runonce
 
 # View Status
 systemctl status runonce
