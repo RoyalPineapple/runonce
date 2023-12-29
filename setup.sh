@@ -36,7 +36,7 @@ if [[ ! -f \$1 || ! -x \$1 ]]; then
 fi
 cp \$1 $SERVICE_PATH && echo "Deferred: \$1"
 EOM
-chmod +x $BIN_PATH
+chmod +x $BIN_PATH/$BIN_NAME
 
 
 echo "Creating service definition at $SERVICE_FILE"
