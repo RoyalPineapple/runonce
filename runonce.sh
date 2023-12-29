@@ -9,6 +9,10 @@ if [[ -z $directory ]]; then
 	exit 1
 fi
 
+if [[ ! -d $directory ]];  then 
+	echo "Argument is not a directory $directory"
+	exit 1
+fi
 
 for file in ${directory}/*
 do
