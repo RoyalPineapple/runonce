@@ -54,7 +54,7 @@ WantedBy=multi-user.target
 EOM
 
 echo "Reoloading systemd"
-systemctl daemon-reload
+sudo systemctl daemon-reload
 
 echo "Enabling service"
-systemctl enable runonce >> /dev/null
+sudo systemctl enable runonce >> /dev/null
