@@ -57,4 +57,4 @@ echo "Reoloading systemd"
 systemctl daemon-reload
 
 echo "Enabling service"
-systemctl enable runonce
+systemctl enable runonce >> /dev/null
