@@ -20,7 +20,7 @@ fi
 
 echo "Creating service directory at $SERVICE_PATH"
 mkdir -p "$SERVICE_PATH"
-chown $USER "$SERVICE_PATH"
+chown $USER:$USER "$SERVICE_PATH"
 
 echo "Installing $SCRIPT_NAME at $SCRIPT_PATH"
 mkdir -p "$SCRIPT_PATH"
